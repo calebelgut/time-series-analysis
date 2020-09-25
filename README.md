@@ -47,7 +47,7 @@ A time series is *stationary* if its statistical properties such as mean, varian
 
 Before we get more into time series analysis & modeling we should work on answering this first question. In order to do that I would like to officially introduce the data to you. Here is what it initially looks like:
 
-![Initial Dataset](/ReadMe4_Images/initial_dataset.png)
+![Initial Dataset](/ReadMe4_Images/initial_dataset.PNG)
 
 1. RegionID: ID
   - I initially was not sure if this column was a zip code or an ID but after a cursory search I discovered that 84654 is from Utah and not Chicago, IL
@@ -68,13 +68,13 @@ Our steps for attaining our top 5 zip codes were as follows:
 
 ## Examine the 25% least urban zip codes *by grabbing all rows corresponding to the bottom 25% of the SizeRank column.*
 
-![bottom25zips](/ReadMe4_Images/bottom25zips.png)
+![bottom25zips](/ReadMe4_Images/bottom25zips.PNG)
 
 Here we initially grab the top 75 zip codes based on Size Rank (urbanization level) and then create a dataframe that includes the zip codes and values for all zip codes with values higher than (aka: ranks lower than) the "top 75" zip codes
 
 **We whiddled down our list of zip codes from 14,723 to 3,681.**
 
-![bottom25zips2](/ReadMe4_Images/bottom25zips2.png)
+![bottom25zips2](/ReadMe4_Images/bottom25zips2.PNG)
 
 ## Next, grab all zip codes with values between 15% below and 15% above median,
 
@@ -94,7 +94,7 @@ Our 3,681 zip codes were then whiddled down to 1,103.
 1. The Coefficient of Variation (Measure of Relative Variability)
 - This value will be key to understanding the unitary risk for our clients. It is the ratio of the standard deviation to the mean (average). 
 
-![descrip_stats](/ReadMe4_Images/descrip_stats.png)
+![descrip_stats](/ReadMe4_Images/descrip_stats.PNG)
 
 ## Finally, we grab those zip codes with a maximum CV (volatile risk) of 0.6 and, within this risk profile, those that have the top 5 ROI:
 
@@ -231,7 +231,7 @@ Let's explain some of these terms!
 
 To be clear, for the sake of time I will run through one zip code that had stationary data, one zip code whose data needed to be differenced, then I will present the best model of the series, and finally I will give a summary of all of the findings.
 
-![acfpcf1](/ReadMe4_Images/acfpcf1.png)
+![acfpacf1](/ReadMe4_Images/acfpacf1.png)
 
 Here we can see that the ACF tails off after around 12 lags. We can imagine that the d value will be 1. The PACF is difficult to grasp as the y-axis shows values as high as 25 in month 48. We will see what our gridsearch tells us. 
 
