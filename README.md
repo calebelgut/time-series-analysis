@@ -197,6 +197,10 @@ For our two zip codes whose returns we differenced we create two time series: On
 
 ![timeseries](/ReadMe4_Images/timeseries.jpg)
 
+## EDITOR'S NOTE: 
+
+I have realized that this work on stationarity is unnecessary when working with SARIMA and ARIMA models. The d (D for SARIMA) value will denote whether or not your data is stationary and the model will accomodate. I have left the information about stationarity analysis for those interested! 
+
 ## ACF, PACF, and Seasonal Plot Helper Functions
 
 Here we have two functions to help us along the way, one that will examine the ACF and PACF over 5 years (this will be explained shortly) and another that uses the mean of the rolling data to examine seasonality. This will help us understand our p and q values for our SARIMA model (all to be explained shortly)
@@ -224,7 +228,7 @@ Let's explain some of these terms!
       - AutoCorrelation doesn't give us individual impact but the overall impact, PACF gives us the individual impact.   
 6. **The AIC Information Criterion**: This is how our grid search will determine the best possible model for us. We desire the model with the lowest AIC as this criterion will show us the model with the best goodness of fit *and* parsimony. Parsimony = simplicity. There may be models that will have a better goodness of fit than the model with the lowest AIC however the additional computational complexity it will require will not be worth the work. 
 7. **p,d,q vs. P,D,Q, and s**: The lowercase letters p,d,q are the non-seasonal parameters. 
-    - I described p & q already but I will also mention that the d is the **integrated** component of the ARIMA model. This value is concerned with the amount of *differencing* as it identifies the number of lag values to subtract from the current observation. *s* is the periodicity of the time series(ours will be set to 12 as we are looking at yearly periods). 
+    - I described p & q already but I will also mention that the d is the **integrated** component of the ARIMA model. This value is concerned with the amount of *differencing* as it identifies the number of lag values to subtract from the current observation. **NOTE: The d and D values will determine if your data is stationary. If it is 0 then it is stationary, if it is 1 it is not. The model will handle this, though, so no worries!** *s* is the periodicity of the time series(ours will be set to 12 as we are looking at yearly periods). 
     - The uppercase letters are the exact same as the lowercase letters except these relate to the **seasonality** component of our time series. (P,D,Q are only used when the model is a SARIMA as opposed to an ARIMA)
         
 ## Our First Zip Code: 48894 - Westphalia, MI
