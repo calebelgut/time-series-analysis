@@ -47,7 +47,7 @@ A time series is *stationary* if its statistical properties such as mean, varian
 
 Before we get more into time series analysis & modeling we should work on answering this first question. In order to do that I would like to officially introduce the data to you. Here is what it initially looks like:
 
-![Initial Dataset](/readme4_images/initial_dataset.png)
+![Initial Dataset](/ReadMe4_Images/initial_dataset.png)
 
 1. RegionID: ID
   - I initially was not sure if this column was a zip code or an ID but after a cursory search I discovered that 84654 is from Utah and not Chicago, IL
@@ -68,13 +68,13 @@ Our steps for attaining our top 5 zip codes were as follows:
 
 ## Examine the 25% least urban zip codes *by grabbing all rows corresponding to the bottom 25% of the SizeRank column.*
 
-![bottom25zips](/readme4_images/bottom25zips.png)
+![bottom25zips](/ReadMe4_Images/bottom25zips.png)
 
 Here we initially grab the top 75 zip codes based on Size Rank (urbanization level) and then create a dataframe that includes the zip codes and values for all zip codes with values higher than (aka: ranks lower than) the "top 75" zip codes
 
 **We whiddled down our list of zip codes from 14,723 to 3,681.**
 
-![bottom25zips2](/readme4_images/bottom25zips2.png)
+![bottom25zips2](/ReadMe4_Images/bottom25zips2.png)
 
 ## Next, grab all zip codes with values between 15% below and 15% above median,
 
@@ -94,13 +94,13 @@ Our 3,681 zip codes were then whiddled down to 1,103.
 1. The Coefficient of Variation (Measure of Relative Variability)
 - This value will be key to understanding the unitary risk for our clients. It is the ratio of the standard deviation to the mean (average). 
 
-![descrip_stats](/readme4_images/descrip_stats.png)
+![descrip_stats](/ReadMe4_Images/descrip_stats.png)
 
 ## Finally, we grab those zip codes with a maximum CV (volatile risk) of 0.6 and, within this risk profile, those that have the top 5 ROI:
 
-![findtop5zips](/readme4_images/findtop5zips.jpg)
+![findtop5zips](/ReadMe4_Images/findtop5zips.jpg)
 
-![top5zips](/readme4_images/top5zips.jpg)
+![top5zips](/ReadMe4_Images/top5zips.jpg)
 
 ### Our top 5 zip codes as per our search are:
 
@@ -122,21 +122,21 @@ It is here where the time series analysis truly begins!
 
 We begin by changing the format of our dataframe. If you recall, each month has its own separate column (for a total of over 260 columns!). This is not only inconvenient but it is not readable! Our model cannot process data like this. We needed a function to take the dataframe and put every month into one column and the values in a separate column. 
 
-![melt_data](/readme4_images/melt_data.jpg)
+![melt_data](/ReadMe4_Images/melt_data.jpg)
 
 From here, I melted down my data, set the time as the index (also important for the model to read), and then created a seperate dataframe for each zipcode with a monthly frequency. This means that when a time series model analyzes my data, it will giving me information on a *monthly* basis. 
 
-![melt_in_action](/readme4_images/melt_in_action.jpg)
+![melt_in_action](/ReadMe4_Images/melt_in_action.jpg)
 
 The resulting dataframe for the zip code 48894 looks like this: 
 
-![48894df](/readme4_images/48894df.jpg)
+![48894df](/ReadMe4_Images/48894df.jpg)
 
 ## The Big Time Series 
 
 After creating a list of dataframes, each containing dates and values for each of our 5 zip codes, I visualized a time series that reflected each zip code's change in value between 1996 and 2018. There was a clear lack of stationarity beginning with, as you can see, a clear upward trend.
 
-![bigtimeseries](/readme4_images/bigtimeseries.png)
+![bigtimeseries](/ReadMe4_Images/bigtimeseries.png)
 
 ## Monthly Returns
 
@@ -144,11 +144,11 @@ Next, I wanted to look more closely at this data. My first decision was to look 
 
 As you can see in the code below, the monthly return is simply a month-to-month version of our ROI formula above. Instead of looking at the final date vs. the initial date, the monthly return looks at each month vs. the month before it. 
 
-![monthly_returns_1](/readme4_images/monthly_returns_1.jpg)
+![monthly_returns_1](/ReadMe4_Images/monthly_returns_1.jpg)
 
 The following is a visualization of the monthly returns of 48894.
 
-![monthly_returns_2](/readme4_images/monthly_returns_2.png)
+![monthly_returns_2](/ReadMe4_Images/monthly_returns_2.png)
 
 ## Stationarity?
 
@@ -168,8 +168,8 @@ We want to see if our rolling mean changes much over time. If there is a great d
 
 In the below graphs you will see an example of a zipcode that turned out to be stationary (48894) and one that was not stationary (49339).
 
-![stationary_graph](/readme4_images/stationary_graph.png)
-![non_stationary_graph](/readme4_images/non_stationary_graph.png)
+![stationary_graph](/ReadMe4_Images/stationary_graph.png)
+![non_stationary_graph](/ReadMe4_Images/non_stationary_graph.png)
 
 ### Dickey-Fuller Test 
 
@@ -179,7 +179,7 @@ This test comes from StatsModels. Its null hypothesis is that the time series is
 
 After running this test on each of the 5 zip codes it turned out that 3 had stationary data 2 did not. 
 
-![dickeyfuller](/readme4_images/dickeyfuller.jpg)
+![dickeyfuller](/ReadMe4_Images/dickeyfuller.jpg)
 
 ### Differencing for Those Without Stationarity
 
@@ -195,13 +195,13 @@ Now that our zip codes are ready for analysis, we instantiate an individual time
 
 For our two zip codes whose returns we differenced we create two time series: One with original non-stationary data and one with the stationary data that has been differenced. I denoted the differenced time series with a "d" as you can see below. The differenced time series will be used when examining the ACF and PACF. 
 
-![timeseries](/readme4_images/timeseries.jpg)
+![timeseries](/ReadMe4_Images/timeseries.jpg)
 
 ## ACF, PACF, and Seasonal Plot Helper Functions
 
 Here we have two functions to help us along the way, one that will examine the ACF and PACF over 5 years (this will be explained shortly) and another that uses the mean of the rolling data to examine seasonality. This will help us understand our p and q values for our SARIMA model (all to be explained shortly)
 
-![helper_functions](/readme4_images/helper_functions.jpg)
+![helper_functions](/ReadMe4_Images/helper_functions.jpg)
 
 # Let the Rest of the Time Series Analysis Begin!
 
@@ -231,11 +231,11 @@ Let's explain some of these terms!
 
 To be clear, for the sake of time I will run through one zip code that had stationary data, one zip code whose data needed to be differenced, then I will present the best model of the series, and finally I will give a summary of all of the findings.
 
-![acfpcf1](/readme4_images/acfpcf1.png)
+![acfpcf1](/ReadMe4_Images/acfpcf1.png)
 
 Here we can see that the ACF tails off after around 12 lags. We can imagine that the d value will be 1. The PACF is difficult to grasp as the y-axis shows values as high as 25 in month 48. We will see what our gridsearch tells us. 
 
-![gridsearch1](/readme4_images/gridsearch1.jpg)
+![gridsearch1](/ReadMe4_Images/gridsearch1.jpg)
 
 For our non-seasonal order we have our pdq equal to (1,0,1) and for our seasonal order we have (0,0,2,12)
 
@@ -247,13 +247,13 @@ From here I split the data into a training and testing set. The model is going t
 
 The SARIMA model was fit with our pdq, PDQ, and s. The results are below:
 
-![sarima1](/readme4_images/sarima1.jpg)
+![sarima1](/ReadMe4_Images/sarima1.jpg)
 
 The AR & MA terms with a lag of 1 both have very high correlations with very low p-values. We can see they are significant. The seasonal MA value after 12 months has a moderately strong negative correlation and also a low p-value. The seasonal MA value after a lag of 24 months, however, has a very high p-value. We can disregard it. 
 
 The error-analysis is below:
 
-![error1](/readme4_images/error1.png)
+![error1](/ReadMe4_Images/error1.png)
 
 Here we can see that the model did not capture all of the data's signal. In the top-left graph we can see that our standardized residuals are not quite white-noise as there is variance in the mean after 2010. In the top right graph we should have a KDE of around a normal-distribution. We do not have that. Finally, our errors should be distributed linearly and if we look at the bottom left graph we do not have this. 
 
@@ -261,14 +261,14 @@ There is more work that needs to be done on this model. I trained the model on d
 
 After analyzing the RMSE of our train and test data we can see that the predicted values are not too far off from our actual values. The RMSEs are similar, as well, so it seems like this model is fit fairly well even given our error issues above. 
 
-![traindata1](/readme4_images/traindata1.png)
-![testdata1](/readme4_images/testdata1.png)
+![traindata1](/ReadMe4_Images/traindata1.png)
+![testdata1](/ReadMe4_Images/testdata1.png)
 
 ### Forecast
 
 Below is the result of forecasting from this model:
 
-![forecast1](/readme4_images/forecast1.png)
+![forecast1](/ReadMe4_Images/forecast1.png)
 
 While the returns do not look like they will change too much over the next 10 years, after analyzing the predicted mean return for years 1, 3, 5, and 10 we received the following information:
 1. Total expected return in 1 year: -4.1%
@@ -286,16 +286,16 @@ This process above was repeated for the other 4 zip codes to determine which zip
 
 SARIMAX RESULTS:
 
-![sarima2](/readme4_images/sarima2.jpg)
+![sarima2](/ReadMe4_Images/sarima2.jpg)
 
 Error Results:
 
-![error2](/readme4_images/error2.png)
+![error2](/ReadMe4_Images/error2.png)
 
 - Train RMSE: 0.00374, Test RMSE: 0.00480
 
-![traindata2](/readme4_images/traindata2.png)
-![testdata2](/readme4_images/testdata2.png)
+![traindata2](/ReadMe4_Images/traindata2.png)
+![testdata2](/ReadMe4_Images/testdata2.png)
 
 Forecast:
 
@@ -314,4 +314,4 @@ After we performed a time series analysis on our 5 zip codes and created a dataf
 
 The ROI DataFrame is Below: 
 
-![final_roi](/readme4_images/final_roi.jpg)
+![final_roi](/ReadMe4_Images/final_roi.jpg)
