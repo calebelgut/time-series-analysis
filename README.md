@@ -315,3 +315,11 @@ After we performed a time series analysis on our 5 zip codes and created a dataf
 The ROI DataFrame is Below: 
 
 ![final_roi](/ReadMe4_Images/final_roi.jpg)
+
+# Further Research
+
+## Emergency Response?
+
+It would be interesting to see if we could add more variables to see how it would affect the forecasting but, in particular, I would like to see if there could be a way to implement emergency disasters even just as a feature that could be turned on or off. I imagine folks are working on that in the face of COVID-19 especially as it relates to autocorrelation (no previous sale price history could have accurately predicted prices today given what the world is experiencing). But, in addition, smaller disasters like fires, storms, floods, avalanches, etc, relative to where the real estate is located could have an effect and I would like to delve into how to account for these risks. 
+
+# Thank You! 
